@@ -1,0 +1,252 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="Middle">
+    <div class="Section">
+        <div class="wrap">
+            <div class="BannersHome">
+                {% for key, favorit in favorites %}
+                <a class="BannersHomeBlock" href="#">
+                    <div class="BannersHomeBlock-row">
+                        <div class="BannersHomeBlock-block">
+                            <strong class="BannersHomeBlock-title">{{ favorit.name }}</strong>
+                            <div class="BannersHomeBlock-content">от&#32;<span class="BannersHomeBlock-price">${{ minPriceCategory[key] }}</span></div>
+                        </div>
+                        <div class="BannersHomeBlock-block">
+                            <div class="BannersHomeBlock-img"><img src="{{ asset(favorit.iconFilename) }}" alt="videoca.png"/></div>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="Section Section_column Section_columnLeft Section_columnDesktop">
+        <div class="wrap">
+            <div class="Section-column">
+                <div class="Section-columnSection Section-columnSection_mark">
+                    <header class="Section-columnHeader">
+                        <strong class="Section-columnTitle">Предложение дня</strong>
+                    </header>
+                    <div class="Card">
+                        <a class="Card-picture" href="{{ path('app_catalog_show', { slug: products.slug}) }}"><img src="{{ products.imageFilename }}" alt="card.jpg"/></a>
+                        <div class="Card-content">
+                            <strong class="Card-title"><a href="{{ path('app_catalog_show', { slug: products.slug}) }}">{{ products.product }}</a></strong>
+                            <div class="Card-description">
+                                {% if products.discounts is not null %}
+                                    {% set discountedPrice = products.prices.first.price - products.prices.first.price * products.discounts.value / 100 %}
+                                    <div class="Card-cost">
+                                        <span class="Card-priceOld">${{ products.prices.first.price }}</span><span class="Card-price">${{ discountedPrice }}</span>
+                                    </div>
+                                {% else %}
+                                    <div class="Card-cost">
+                                        <span class="Card-price">${{ products.prices.first.price }}</span>
+                                    </div>
+                                {% endif %}
+                                <div class="Card-category">{{ products.category.name }}</div>
+                            </div>
+                            <div class="CountDown" data-date="07.07.2023 04:01">
+                                <script src="{{ asset('assets/js/countdown.js') }}"></script>
+                                <div class="CountDown-block">
+                                    <div class="CountDown-wrap">
+                                        <div class="CountDown-hours"></div><span class="CountDown-label">часов</span>
+                                    </div>
+                                </div>
+                                <div class="CountDown-block">
+                                    <div class="CountDown-wrap">
+                                        <div class="CountDown-minutes"></div><span class="CountDown-label">минут</span>
+                                    </div>
+                                </div>
+                                <div class="CountDown-block">
+                                    <div class="CountDown-wrap">
+                                        <div class="CountDown-secs"></div><span class="CountDown-label">секунд</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="Section-content">
+                <header class="Section-header">
+                    <h2 class="Section-title">Каталог Топ товаров</h2>
+                </header>
+                <div class="Cards">
+                    {% for topProduct in topProducts %}
+                    <div class="Card"><a class="Card-picture" href="{{ path('app_catalog_show', { slug: topProduct.slug}) }}"><img src="{{ topProduct.imageFilename }}" alt="card.jpg"/></a>
+                        <div class="Card-content">
+                            <strong class="Card-title"><a href="{{ path('app_catalog_show', { slug: topProduct.slug}) }}">{{ topProduct.product }}</a>
+                            </strong>
+                            <div class="Card-description">
+                                {% if topProduct.discounts is not null %}
+                                {% set discountedPrice = topProduct.prices.first.price - topProduct.prices.first.price * topProduct.discounts.value / 100 %}
+                                    <div class="Card-cost">
+                                        <span class="Card-priceOld">${{ topProduct.prices.first.price }}</span><span class="Card-price">${{ discountedPrice }}</span>
+                                    </div>
+                                {% else %}
+                                    <div class="Card-cost">
+                                       <span class="Card-price">${{ topProduct.prices.first.price }}</span>
+                                    </div>
+                                {% endif %}
+                                <div class="Card-category">{{ topProduct.category.name }}
+                                </div>
+                                <div class="Card-hover"><a class="Card-btn" href="{{ path('app_catalog_show', {slug: topProduct.slug}) }}"><img src="{{ asset('assets/img/icons/card/bookmark.svg') }}" alt="bookmark.svg"/></a><a class="Card-btn" href="{{ path('app_cart_addtocart', { id: topProduct.id }) }}"><img src="{{ asset('assets/img/icons/card/cart.svg') }}" alt="cart.svg"/></a><a class="Card-btn" href="{{ path('app_add_to_comparison', {id: topProduct.id}) }}"><img src="{{ asset('assets/img/icons/card/change.svg') }}" alt="change.svg"/></a>
+                                </div>
+                            </div>
+                        </div>
+                        {% if topProduct.discounts is not null %}
+                            <div class="Card-sale">
+                                -{{ topProduct.discounts.value }}%
+                            </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="Section Section_dark">
+        <div class="wrap">
+            <div class="Section-content">
+                <div class="Slider Slider_carousel">
+                    <header class="Section-header">
+                        <h2 class="Section-title">Горячие предложения</h2>
+                        <div class="Section-control">
+                            <div class="Slider-navigate">
+                            </div>
+                        </div>
+                    </header>
+                    <div class="Slider-box Cards Cards_hz">
+                        {% for hotOffer in hotOffers %}
+                            <div class="Slider-item">
+                                <div class="Slider-content">
+                                    <div class="Card"><a class="Card-picture" href="{{ path('app_catalog_show', { slug: hotOffer.slug}) }}"><img src="{{ asset(hotOffer.imageFilename) }}" alt="card.jpg"/></a>
+                                        <div class="Card-content">
+                                            <strong class="Card-title"><a href="{{ path('app_catalog_show', { slug: hotOffer.slug}) }}">{{ hotOffer.product }}</a>
+                                            </strong>
+                                            <div class="Card-description">
+                                                {% if hotOffer.discounts is not null %}
+                                                    {% set discountedPrice = hotOffer.prices.first.price - hotOffer.prices.first.price * hotOffer.discounts.value / 100 %}
+                                                <div class="Card-cost">
+                                                    <span class="Card-priceOld">${{ hotOffer.prices.first.price }}</span><span class="Card-price">${{ discountedPrice }}</span>
+                                                </div>
+                                                {% else %}
+                                                    <div class="Card-cost">
+                                                        <span class="Card-price">${{ hotOffer.prices.first.price }}</span>
+                                                    </div>
+                                                {% endif %}
+                                                <div class="Card-category">
+                                                    {{ hotOffer.category.name }}
+                                                </div>
+                                                <div class="Card-hover"><a class="Card-btn" href="{{ path('app_catalog_show', {slug: hotOffer.slug}) }}"><img src="{{ asset('assets/img/icons/card/bookmark.svg') }}" alt="bookmark.svg"/></a><a class="Card-btn" href="{{ path('app_cart_addtocart', { id: hotOffer.id }) }}"><img src="{{ asset('assets/img/icons/card/cart.svg') }}" alt="cart.svg"/></a><a class="Card-btn" href="{{ path('app_add_to_comparison', {id: hotOffer.id}) }}"><img src="{{ asset('assets/img/icons/card/change.svg') }}" alt="change.svg"/></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% if hotOffer.discounts is not null %}
+                                            <div class="Card-sale">
+                                                -{{ hotOffer.discounts.value }}%
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="Section Section_column Section_columnRight">
+        <div class="wrap">
+            <div class="Section-column">
+                <div class="Section-columnSection Section-columnSection_mark">
+                    <div class="media media_advantage">
+                        <div class="media-image"><img src="{{ asset('assets/img/icons/advantages/shipping.svg') }}" alt="shipping.svg"/>
+                        </div>
+                        <div class="media-content">
+                            <strong class="media-title">Доставка</strong>
+                            <p class="media-text">Доставка по всему миру</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="Section-columnSection Section-columnSection_mark">
+                    <div class="media media_advantage">
+                        <div class="media-image"><img src="{{ asset('assets/img/icons/advantages/moneyBack.svg') }}" alt="moneyBack.svg"/>
+                        </div>
+                        <div class="media-content">
+                            <strong class="media-title">Возврат денег</strong>
+                            <p class="media-text">Не даем никаких гарантий</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="Section-columnSection Section-columnSection_mark">
+                    <div class="media media_advantage">
+                        <div class="media-image"><img src="{{ asset('assets/img/icons/advantages/support.svg') }}" alt="support.svg"/>
+                        </div>
+                        <div class="media-content">
+                            <strong class="media-title">Поддержка</strong>
+                            <p class="media-text">Денег нет, но вы держитесь</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="Section-columnSection Section-columnSection_mark">
+                    <div class="media media_advantage">
+                        <div class="media-image"><img src="{{ asset('assets/img/icons/advantages/quality.svg') }}" alt="quality.svg"/>
+                        </div>
+                        <div class="media-content">
+                            <strong class="media-title">Гарантия качества</strong>
+                            <p class="media-text">Наш завхоз рекомендует</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="Section-content">
+                <div class="Slider Slider_carousel">
+                    <header class="Section-header Section-header_close">
+                        <h2 class="Section-title">Ограниченный тираж</h2>
+                        <div class="Section-control">
+                            <div class="Slider-navigate">
+                            </div>
+                        </div>
+                    </header>
+                    <div class="Slider-box Cards">
+                        {% for limitedEdition in limitedEditions %}
+                            <div class="Slider-item">
+                                <div class="Slider-content">
+                                    <div class="Card"><a class="Card-picture" href="{{ path('app_catalog_show', { slug: limitedEdition.slug}) }}"><img src="{{ limitedEdition.imageFilename }}" alt="card.jpg"/></a>
+                                        <div class="Card-content">
+                                            <strong class="Card-title"><a href="{{ path('app_catalog_show', { slug: limitedEdition.slug}) }}">{{ limitedEdition.product }}</a>
+                                            </strong>
+                                            <div class="Card-description">
+                                                {% if limitedEdition.discounts is not null %}
+                                                    {% set discountedPrice = limitedEdition.prices.first.price - limitedEdition.prices.first.price * limitedEdition.discounts.value / 100 %}
+                                                    <div class="Card-cost">
+                                                        <span class="Card-priceOld">${{ limitedEdition.prices.first.price }}</span><span class="Card-price">${{ discountedPrice }}</span>
+                                                    </div>
+                                                {% else %}
+                                                    <div class="Card-cost">
+                                                        <span class="Card-price">${{ limitedEdition.prices.first.price }}</span>
+                                                    </div>
+                                                {% endif %}
+                                                <div class="Card-category">{{ limitedEdition.category.name }}
+                                                </div>
+                                                <div class="Card-hover"><a class="Card-btn" href="{{ path('app_catalog_show', {slug: limitedEdition.slug}) }}"><img src="{{ asset('assets/img/icons/card/bookmark.svg') }}" alt="bookmark.svg"/></a><a class="Card-btn" href="{{ path('app_cart_addtocart', { id: limitedEdition.id }) }}"><img src="{{ asset('assets/img/icons/card/cart.svg') }}" alt="cart.svg"/></a><a class="Card-btn" href="{{ path('app_add_to_comparison', {id: limitedEdition.id}) }}"><img src="{{ asset('assets/img/icons/card/change.svg') }}" alt="change.svg"/></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% if limitedEdition.discounts is not null %}
+                                            <div class="Card-sale">
+                                                -{{ limitedEdition.discounts.value }}%
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

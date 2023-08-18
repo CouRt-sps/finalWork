@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Создание категории{% endblock %}
+
+{% block slider %}{% endblock %}
+
+{% block stylesheet %}
+    {{ encore_entry_link_tags('app') }}
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    {% if showError %}
+    <div class="row">
+        <div class="col-12">
+            <div class="alert alert-danger" role="alert">
+                Не удалось создать категорию
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="row">
+        <div class="col-12">
+            <div class="p-4 border rounded-lg mb-4 shadow-sm bg-white">
+
+                <h1>Создание категории</h1>
+
+                {% include 'admin/categories/form.html.twig' with { button_text: 'Создать' } %}
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

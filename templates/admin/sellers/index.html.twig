@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Управление продавцами{% endblock %}
+{% block stylesheet %}
+    {{ encore_entry_link_tags('app') }}
+{% endblock %}
+{% block slider %}{% endblock %}
+
+{% block body %}
+    <h2>Управление продавцами ({{ pagination.totalItemCount }})<span><button type="submit" style="color: green;"><a href="{{ path('app_admin_sellers_create') }}">+ СОЗДАТЬ</a></button></span></h2>
+
+    {% include 'partial/form_seach.html.twig' %}
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Название</th>
+            <th>Описание</th>
+            <th>Фото</th>
+            <th>Телефон</th>
+            <th>Адресс</th>
+            <th>Email</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for seller in pagination %}
+            <tr>
+                <td>
+                    <a href="{{ path('app_seller', { slug: seller.slug }) }}">
+                        {{ seller.seller }}
+                    </a>
+                </td>
+                <td>{{ seller.description }}</td>
+                <td>{{ seller.imageSeller }}</td>
+                <td>{{ seller.phone }}</td>
+                <td>{{ seller.address }}</td>
+                <td>{{ seller.email }}</td>
+                <td>
+                    <a href="{{ path('app_admin_sellers_edit', { id: seller.id }) }}">Редактировать</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">Нет продавцов</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {{ knp_pagination_render(pagination) }}
+{% endblock %}

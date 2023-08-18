@@ -1,0 +1,22 @@
+{{ form_start(sellerForm) }}
+    {{ form_row(sellerForm.seller, {
+        label: 'Название'
+    }) }}
+    {{ form_row(sellerForm.description, {
+        label: 'Описание продавца'
+    }) }}
+    {{ form_row(sellerForm.imageSeller, {
+        label: 'Логотип'
+    }) }}
+    {{ form_row(sellerForm.phone, {
+        label: 'Телефон'
+    }) }}
+    {{ form_row(sellerForm.address, {
+        label: 'Адресс'
+    }) }}
+    {{ form_row(sellerForm.email, {
+        label: 'Email'
+    }) }}
+
+    <button type="submit" class="btn btn-primary">{{ button_text }}</button>
+{{ form_end(sellerForm) }}

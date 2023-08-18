@@ -1,0 +1,19 @@
+{{ form_start(commentForm) }}
+    {{ form_row(commentForm.content, {
+        label: 'Текст'
+    }) }}
+    {{ form_row(commentForm.product, {
+        label: 'Продукт'
+    }) }}
+    {{ form_row(commentForm.user, {
+        label: 'Автор'
+    }) }}
+    {{ form_row(commentForm.createdAt, {
+        label: 'Дата создания'
+    }) }}
+    {{ form_row(commentForm.updatedAt, {
+        label: 'Дата редактирования'
+    }) }}
+
+<button type="submit" class="btn btn-primary">{{ button_text }}</button>
+{{ form_end(commentForm) }}

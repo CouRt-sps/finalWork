@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Создание скидки{% endblock %}
+{% block slider %}{% endblock %}
+{% block stylesheet %}
+    {{ encore_entry_link_tags('app') }}
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    {% if showError %}
+    <div class="row">
+        <div class="col-12">
+            <div class="alert alert-danger" role="alert">
+                Не удалось создать скидку
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    <div class="row">
+        <div class="col-12">
+            <div class="p-4 border rounded-lg mb-4 shadow-sm bg-white">
+
+                <h1>Создание скидки</h1>
+
+                {% include 'admin/discounts/form.html.twig' with { button_text: 'Создать' } %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Административный раздел{% endblock %}
+{% block slider %}{% endblock %}
+
+{% block body %}
+    <div class="col-12 p-0">
+        <h1>Административный раздел</h1>
+        <ul style="list-style-type: none;">
+                <li><a href="{{ path('app_admin_products_index') }}">Просмотр и редактирование товаров.</a></li
+                <li><a href="{{ path('app_admin_categories') }}">Просмотр и редактирование категорий каталога.</a></li>
+                <li><a href="{{ path('app_admin_discounts') }}">Просмотр и редактирование скидок.</a></li>
+                <li><a href="{{ path('app_admin_sellers') }}">Просмотр и редактирование продавцов.</a></li>
+                <li><a href="{{ path('app_admin_comment') }}">Просмотр и редактирование комментариев.</a></li>
+        </ul>
+    </div>
+{% endblock %}

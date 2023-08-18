@@ -1,0 +1,22 @@
+<form>
+    <div class="input-group mb-3">
+        <input type="text"
+               name="q"
+               class="form-control"
+               placeholder="Найти..."
+               value="{{ app.request.get('q') }}"
+        >
+        <div class="input-group-append">
+            <button type="submit" class="btn btn-outline-secondary"><i class="fa fa-search"></i></button>
+        </div>
+    </div>
+</form>
+
+<form>
+    <select name="perPage">
+        <option value="10" {% if app.request.query.get('perPage') == '10' %}selected{% endif %}>10</option>
+        <option value="20" {% if app.request.query.get('perPage') == '20' or not app.request.query.has('perPage') %}selected{% endif %}>20</option>
+        <option value="50" {% if app.request.query.get('perPage') == '50' %}selected{% endif %}>50</option>
+    </select>
+    <button type="submit">Применить</button>
+</form>

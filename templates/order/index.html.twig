@@ -1,0 +1,183 @@
+{% extends 'base.html.twig' %}
+
+{% block slider %}{% endblock %}
+{% block stylesheet %}
+    {{ encore_entry_link_tags('app') }}
+{% endblock %}
+
+{% block body %}
+<div class="Middle Middle_top">
+    <div class="Middle-top">
+        <div class="wrap">
+            <div class="Middle-header">
+                <h1 class="Middle-title">Оформление заказа
+                </h1>
+                <ul class="breadcrumbs Middle-breadcrumbs">
+                    <li class="breadcrumbs-item"><a href="{{ path('app_homepage') }}">Главная</a>
+                    </li>
+                    <li class="breadcrumbs-item breadcrumbs-item_current"><span>Оформление заказа</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="Section Section_column Section_columnRight Section_columnWide Order">
+        <div class="wrap">
+            <div class="Section-column">
+                <div class="Section-columnSection">
+                    <header class="Section-header">
+                        <strong class="Section-title">Прогресс заполнения
+                        </strong>
+                    </header>
+                    <div class="Section-columnContent">
+                        <ul class="menu menu_vt Order-navigate">
+                            <li class="menu-item_ACTIVE menu-item"><a class="menu-link" href="#step1">Шаг 1. Параметры пользователя</a></li>
+                            <li class="menu-item"><a class="menu-link" href="#step2">Шаг 2. Способ доставки</a></li>
+                            <li class="menu-item"><a class="menu-link" href="#step3">Шаг 3. Способ оплаты</a></li>
+                            <li class="menu-item"><a class="menu-link" href="#step4">Шаг 4. Подтверждение заказа</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="Section-content">
+                <form class="form" action="#" method="post">
+                    <div class="Order-block Order-block_OPEN" id="step1">
+                        <header class="Section-header Section-header_sm">
+                            <h2 class="Section-title">Шаг 1. Параметры пользователя</h2>
+                        </header>
+                        <div class="row">
+                            <div class="row-block">
+                                <div class="form-group">
+                                    <label class="form-label" for="name">Имя</label>
+                                    <input class="form-input" id="name" name="name" type="text" value="" placeholder="{{ user }}"/>
+                                </div>
+                                {{ form_start(orderForm) }}
+                                {{ form_row(orderForm.phone, {
+                                    label: 'Телефон'
+                                }) }}
+                            </div>
+                        </div>
+                        <div class="Order-footer"><a class="btn btn_success Order-next" href="#step2">Дальше</a>
+                        </div>
+                    </div>
+                    <div class="Order-block" id="step2">
+                        <header class="Section-header Section-header_sm">
+                            <h2 class="Section-title">Шаг 2. Способ доставки</h2>
+                        </header>
+                        <div class="form-group">
+                            <div>
+                                {{ form_row(orderForm.deliveryMethod, {
+                                    label: 'выберите доставку'
+                                }) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_row(orderForm.address, {
+                                label: 'Адресс'
+                            }) }}
+                        </div>
+                        <div class="Order-footer"><a class="btn btn_success Order-next" href="#step3">Дальше</a>
+                        </div>
+                    </div>
+                    <div class="Order-block" id="step3">
+                        <header class="Section-header Section-header_sm">
+                            <h2 class="Section-title">Шаг 3. Способ оплаты</h2>
+                        </header>
+                        <div class="form-group">
+                            {{ form_row(orderForm.paymentMethod, {
+                                label: 'Способ оплаты'
+                            }) }}
+                        </div>
+                        <div class="Order-footer"><a class="btn btn_success Order-next" href="#step4">Дальше</a>
+                        </div>
+                    </div>
+                    <div class="Order-block" id="step4">
+                        <header class="Section-header Section-header_sm">
+                            <h2 class="Section-title">Шаг 4. Подтверждение заказа</h2>
+                        </header>
+                        <!--+div.Order.-confirmation-->
+                        <div class="Order-infoBlock">
+                            <div class="Order-personal">
+                                <div class="row">
+                                    <div class="row-block">
+                                        <div class="Order-info">
+                                            <div class="Order-infoType">Имя:
+                                            </div>
+                                            <div class="Order-infoContent">{{ user }}
+                                            </div>
+                                        </div>
+                                        <div class="Order-info">
+                                            <div class="Order-infoType">Телефон:
+                                            </div>
+                                            <div class="Order-infoContent">{{ orderForm.phone.vars.data }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row-block">
+                                        <div class="Order-info Order-info_delivery">
+                                            <div class="Order-infoType">Тип доставки:
+                                            </div>
+                                            <div class="Order-infoContent">{{ orderForm.deliveryMethod.vars.data }}
+                                            </div>
+                                        </div>
+                                        <div class="Order-info">
+                                            <div class="Order-infoType">Адрес:
+                                            </div>
+                                            <div class="Order-infoContent">{{ orderForm.address.vars.data }}
+                                            </div>
+                                        </div>
+                                        <div class="Order-info Order-info_pay">
+                                            <div class="Order-infoType">Оплата:
+                                            </div>
+                                            <div class="Order-infoContent">{{ orderForm.paymentMethod.vars.data }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="Cart Cart_order">
+                                {% for cartItem in cartItems %}
+                                <div class="Cart-product">
+                                    <div class="Cart-block Cart-block_row">
+                                        <div class="Cart-block Cart-block_pict"><a class="Cart-pict" href="{{ path('app_catalog_show', { slug: cartItem.product.slug }) }}"><img class="Cart-img" src="{{ asset(cartItem.product.imageFilename) }}" alt="card.jpg"/></a>
+                                        </div>
+                                        <div class="Cart-block Cart-block_info"><a class="Cart-title" href="{{ path('app_catalog_show', { slug: cartItem.product.slug }) }}">{{ cartItem.product.product }}</a>
+                                            <div class="Cart-desc">{{ cartItem.product.description }}
+                                            </div>
+                                        </div>
+                                        <div class="Cart-block Cart-block_price">
+                                            <div class="Cart-price">{{ cartItem.product.prices.first.price }}$
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="Cart-block Cart-block_row">
+                                        <div class="Cart-block Cart-block_amount">1 шт.
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                                <div class="Cart-total">
+                                    <div class="Cart-block Cart-block_total">
+                                        <strong class="Cart-title">Итого:
+                                        </strong><span class="Cart-price">{{ total }}$</span>
+                                    </div>
+                                    <div class="Cart-block">
+                                        {% if orderForm.paymentMethod.vars.data == 'Онлайн картой' %}
+                                        <button class="btn btn_primary btn_lg" type="submit"><a href="{{ path('app_order_paymentcart', { total: total }) }}">Перейти к оплате</a>
+                                        </button>
+                                        {% else %}
+                                        <button class="btn btn_primary btn_lg" type="submit"><a href="{{ path('app_order_paymentalien', { total: total }) }}">Перейти к оплате</a>
+                                            </button>
+                                        {% endif %}
+                                    </div>
+                                    {{ form_end(orderForm) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Управление продуктами{% endblock %}
+{% block stylesheet %}
+    {{ encore_entry_link_tags('app') }}
+{% endblock %}
+{% block slider %}{% endblock %}
+
+{% block body %}
+    <h2>Управление продуктами ({{ pagination.totalItemCount }})<span><button type="submit" style="color: green;"><a href="{{ path('app_admin_products_create') }}">+ СОЗДАТЬ</a></button></span></h2>
+
+    {% include 'partial/form_seach.html.twig' %}
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Продукт</th>
+            <th>Описание</th>
+            <th>Цена</th>
+            <th>Создан</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for product in pagination %}
+            <tr>
+                <td>
+                    <a href="{{ path('app_catalog_show', { slug: product.slug }) }}">
+                        {{ product.product }}
+                    </a>
+                </td>
+                <td>{{ product.description }}</td>
+                <td>{{ product.prices.first.price }}</td>
+                <td>{{ product.createdAt|date('d-m-Y-H-i-s') }}</td>
+                <td>
+                    <a href="{{ path('app_admin_products_edit', { id: product.id }) }}">Редактировать</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">Нет продуктов</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {{ knp_pagination_render(pagination) }}
+{% endblock %}

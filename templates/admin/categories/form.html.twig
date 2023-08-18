@@ -1,0 +1,21 @@
+{{ form_start(categoryForm) }}
+    {{ form_row(categoryForm.name, {
+        label: 'Название'
+    }) }}
+    {{ form_row(categoryForm.iconFilename, {
+        label: 'Описание категории'
+    }) }}
+    {% if button_text == 'Изменить' %}
+        {{ form_row(categoryForm.sortIndex, {
+            label: 'Индекс сортировки'
+        }) }}
+        {{ form_row(categoryForm.favorites, {
+            label: 'Избранное'
+        }) }}
+        {{ form_row(categoryForm.isActive, {
+            label: 'Активность'
+        }) }}
+    {% endif %}
+
+    <button type="submit" class="btn btn-primary">{{ button_text }}</button>
+{{ form_end(categoryForm) }}

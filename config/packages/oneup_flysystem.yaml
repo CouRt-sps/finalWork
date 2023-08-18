@@ -1,0 +1,9 @@
+# Read the documentation: https://github.com/1up-lab/OneupFlysystemBundle/blob/release/3.x/Resources/doc/index.md
+#oneup_flysystem:
+ #   adapters:
+ #       default_adapter:
+ #           local:
+ #               directory: '%kernel.project_dir%/public/%product_uploads%'
+ #   filesystems:
+ #       uploads_products:
+ #           adapter: uploads_products_adaptor

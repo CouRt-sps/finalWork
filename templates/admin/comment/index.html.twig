@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Управление комментариями{% endblock %}
+{% block stylesheet %}
+    {{ encore_entry_link_tags('app') }}
+{% endblock %}
+{% block slider %}{% endblock %}
+
+{% block body %}
+    <h2>Управление продавцами ({{ pagination.totalItemCount }})<span><button type="submit" style="color: green;"><a href="{{ path('app_admin_comment_create') }}">+ СОЗДАТЬ</a></button></span></h2>
+
+    {% include 'partial/form_seach.html.twig' %}
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Автор</th>
+            <th>Продукт</th>
+            <th>Текст</th>
+            <th>Дата создания</th>
+            <th>Дата редактирования</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for comment in pagination %}
+            <tr>
+                <td>{{ comment.user.firstName }}</td>
+                <td>
+                    <a href="{{ path('app_catalog_show', { slug: comment.product.slug }) }}">
+                        {{ comment.product.product }}
+                    </a>
+                </td>
+                <td>{{ comment.content|u.truncate(40, '...') }}</td>
+                <td>{{ comment.createdAt|date('d-m-Y-H-i-s') }}</td>
+                <td>{{ comment.updatedAt|date('d-m-Y-H-i-s') }}</td>
+                <td>
+                    <a href="{{ path('app_admin_comment_edit', { id: comment.id }) }}">Редактировать</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">Нет комментариев</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {{ knp_pagination_render(pagination) }}
+{% endblock %}

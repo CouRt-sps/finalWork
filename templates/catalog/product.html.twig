@@ -1,0 +1,206 @@
+{% extends 'base.html.twig' %}
+
+{% block slider %}{% endblock %}
+
+{% block stylesheet %}
+    {{ encore_entry_link_tags('app') }}
+{% endblock %}
+
+{% block body %}
+<div class="Middle Middle_top">
+    <div class="Middle-top">
+        <div class="wrap">
+            <div class="Middle-header">
+                <h1 class="Middle-title">Товар</h1>
+                <ul class="breadcrumbs Middle-breadcrumbs">
+                    <li class="breadcrumbs-item"><a href="{{ path('app_homepage') }}">Главная</a></li>
+                    <li class="breadcrumbs-item"><a href="{{ path('app_catalog') }}">Каталог</a></li>
+                    <li class="breadcrumbs-item"><a href="{{ path('app_catalog') }}">{{ products.category.name }}</a></li>
+                    <li class="breadcrumbs-item breadcrumbs-item_current"><span>Товар</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="Section">
+        <div class="wrap">
+            <div class="Product">
+                <div class="ProductCard">
+                    <div class="ProductCard-look">
+                        <div class="ProductCard-photo">
+                            {% if products.discounts is not null %}<div class="ProductCard-sale">{{ products.discounts.value }}%
+                            </div>{% endif %}<img src="{{ asset(products.imageFilename) }}" alt="bigGoods.png"/>
+                        </div>
+                        <div class="ProductCard-picts"><a class="ProductCard-pict ProductCard-pict_ACTIVE" href="{{ asset(products.imageFilename) }}"><img src="{{ asset(products.imageFilename) }}" alt="bigGoods.png"/></a><a class="ProductCard-pict" href="{{ asset('assets/img/content/home/slider.png') }}"><img src="{{ asset('assets/img/content/home/slider.png') }}" alt="slider.png"/></a><a class="ProductCard-pict" href="{{ asset('assets/img/content/home/videoca.png') }}"><img src="{{ asset('assets/img/content/home/videoca.png') }}" alt="videoca.png"/></a>
+                        </div>
+                    </div>
+                    <div class="ProductCard-desc">
+                        <div class="ProductCard-header">
+                            <h2 class="ProductCard-title">{{ products.description }}</h2>
+                            <div class="ProductCard-info">
+                                <div class="ProductCard-cost">
+                                    {% if products.discounts is not null %}
+                                    <div class="ProductCard-price">
+                                            {% set discountedPrice = products.prices.first.price - products.prices.first.price * products.discounts.value / 100 %}
+                                            ${{ discountedPrice }}
+                                    </div>
+                                    <div class="ProductCard-priceOld">
+                                        ${{ products.prices.first.price }}
+                                    </div>
+                                    {% else %}
+                                    <div class="ProductCard-price">
+                                        ${{ products.prices.first.price }}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                <div class="ProductCard-compare">
+                                    <a class="btn btn_default" href="{{ path('app_add_to_comparison', { id: products.id }) }}"><img class="btn-icon" src="{{ asset('assets/img/icons/card/change.svg') }}" alt="change.svg"/></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ProductCard-text">
+                            <ul>
+                                {{ products.body }}
+                            </ul>
+                        </div>
+                        <div class="ProductCard-cart">
+                            <div class="ProductCard-cartElement ProductCard-cartElement_amount">
+                                <div class="Amount Amount_product">
+                                    <button class="Amount-remove" type="button"></button>
+                                    <input class="Amount-input form-input" name="amount" type="text" value="1"/>
+                                    <button class="Amount-add" type="button"></button>
+                                </div>
+                            </div>
+                            <div class="ProductCard-cartElement"><a class="btn btn_primary" href="{{ path('app_cart_addtocart', { id: products.id }) }}"><img class="btn-icon" src="{{ asset('assets/img/icons/card/cart_white.svg') }}" alt="cart_white.svg"/><span class="btn-content">Купить</span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="Tabs Tabs_default">
+                    <div class="Tabs-links">
+                        <a class="Tabs-link_ACTIVE Tabs-link" href="#description"><span>Описание</span></a>
+                        <a class="Tabs-link" href="#sellers"><span>Продавцы</span></a>
+                        <a class="Tabs-link" href="#addit"><span>Характеристики</span></a>
+                        <a class="Tabs-link" href="#reviews"><span>Отзывы ({{ products.comments|length }})</span></a>
+                    </div>
+                    <div class="Tabs-wrap">
+                        <div class="Tabs-block" id="description">
+                            <h2>{{ products.product }}</h2>
+                            <p>{{ products.description }}
+                            </p><img class="pict pict_right" src="{{ asset('assets/img/content/home/bigGoods.png') }}" alt="bigGoods.png"/>
+                            <ul>
+                                {{ products.body }}
+                            </ul>
+                            <div class="clearfix">
+                            </div>
+                            <div class="table">
+                                <table>
+                                    <tr>
+                                        <th>Табличка внутри описания</th>
+                                        <th>Значение
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td>ываыв</td>
+                                        <td>llslssl
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="Tabs-block" id="sellers">
+                            <div class="Categories Categories_product">
+                                {% for sellerName in sellerNames %}
+                                    <div class="Categories-row">
+                                        <div class="Categories-block Categories-block_info">
+                                            <div class="Categories-info">
+                                                <strong><a href="{{ path('app_seller', { slug: sellerName.sellerSlug }) }}">{{ sellerName.sellerName }}</a>
+                                                </strong>
+                                            </div>
+                                        </div>
+                                        <div class="Categories-splitProps">
+                                        </div>
+                                        <div class="Categories-block Categories-price">
+                                            <strong>$&#32;{{ sellerName.priceValue }}
+                                            </strong>
+                                        </div>
+                                        <div class="Categories-block Categories-button"><a class="btn btn_primary" href="#"><img class="btn-icon" src="{{ asset('assets/img/icons/card/cart_white.svg') }}" alt="cart_white.svg"/><span class="btn-content">Купить</span></a>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="Tabs-block" id="addit">
+                            <div class="Product-props">
+                                <div class="Product-prop">
+                                    <strong>Рейтинг
+                                    </strong><span> {{ products.feature.rating }}</span>
+                                </div>
+                                <div class="Product-prop">
+                                    <strong>Матрица
+                                    </strong><span>{{ products.feature.matrix }}</span>
+                                </div>
+                                <div class="Product-prop">
+                                    <strong>Наушники в комплекте
+                                    </strong><span>{{ products.feature.headphones ? 'Yes' : 'No' }}</span>
+                                </div>
+                                <div class="Product-prop">
+                                    <strong>Время работы
+                                    </strong><span>{{ products.feature.workingHours }} часов</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="Tabs-block" id="reviews">
+                            <div class="Comments">
+                                <div class="Comment">
+                                    <div class="Comment-column Comment-column_pict">
+                                        <div class="Comment-avatar">
+                                        </div>
+                                    </div>
+                                    <div class="Comment-column">
+                                        <header class="Comment-header">
+                                            <div>
+                                                <strong class="Comment-title">{{ products.comments.first.user.firstName}}
+                                                </strong><span class="Comment-date">{{ products.comments.first.createdAt|date('d-m-Y-H-i-s') }}</span>
+                                            </div>
+                                        </header>
+                                        <div class="Comment-content">
+                                            {{ products.comments.first.content }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <header class="Section-header Section-header_product">
+                                <h3 class="Section-title">Оставить отзыв</h3>
+                            </header>
+                            <div class="Tabs-addComment">
+                                <form class="form" action="#" method="post">
+                                    {{ form_start(AddCommentForm) }}
+                                    <div class="form-group">
+                                        {{ form_row(AddCommentForm.content) }}
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="row-block">
+                                                {{ app.user.firstName }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn_muted" type="submit">Оставить отзыв</button>
+                                    </div>
+                                    {{ form_end(AddCommentForm) }}
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+{% endblock %}
+

@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Изменение продукта{% endblock %}
+{% block stylesheet %}
+    {{ encore_entry_link_tags('app') }}
+{% endblock %}
+{% block slider %}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            {% if showError %}
+                <div class="col-12">
+                    <div class="alert alert-danger" role="alert">
+                        Не удалось изменить статью
+                    </div>
+                </div>
+            {% endif %}
+
+
+            <div class="col-12">
+
+                <div class="border flex-md-row mb-4 shadow-sm bg-white p-4">
+                    <h1>Изменение статьи</h1>
+
+                    {% include 'admin/products/form.html.twig' with { button_text: 'Изменить' } %}
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('assets/js/bootstrap_file_field.js') }}"></script>
+{% endblock %}

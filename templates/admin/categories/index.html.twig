@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Управление категориями{% endblock %}
+{% block stylesheet %}
+    {{ encore_entry_link_tags('app') }}
+{% endblock %}
+{% block slider %}{% endblock %}
+
+{% block body %}
+    <h2>Управление категориями ({{ pagination.totalItemCount }})<span><button type="submit" style="color: green;"><a href="{{ path('app_admin_categories_create') }}">+ создать</a></button></span></h2>
+
+    {% include 'partial/form_seach.html.twig' %}
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Название</th>
+            <th>Индекс сортировки</th>
+            <th>Избранная</th>
+            <th>Активная</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for category in pagination %}
+            <tr>
+                <td>{{ category.name }}</td>
+                <td>{{ category.sortIndex }}</td>
+                <td>{{ category.favorites }}</td>
+                <td>{{ category.isActive }}</td>
+                <td>
+                    <a href="{{ path('app_admin_categories_edit', { id: category.id }) }}">Редактировать</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">Нет категорий</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {{ knp_pagination_render(pagination) }}
+{% endblock %}

@@ -1,0 +1,98 @@
+{% extends 'base.html.twig' %}
+
+{% block slider %}{% endblock %}
+
+{% block stylesheet %}
+  {{ encore_entry_link_tags('app') }}
+{% endblock %}
+
+{% block body %}
+  <div class="Middle Middle_top">
+    <div class="Middle-top">
+      <div class="wrap">
+        <div class="Middle-header">
+          <h1 class="Middle-title">{{ seller.seller }}</h1>
+          <ul class="breadcrumbs Middle-breadcrumbs">
+            <li class="breadcrumbs-item"><a href="{{ path('app_homepage') }}">Главная</a></li>
+            <li class="breadcrumbs-item breadcrumbs-item_current"><span>О продавце</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="Section Section_column Section_columnLeft Section_columnWide">
+      <div class="wrap">
+        <div class="Section-column">
+          <div class="Section-columnSection Section-columnSection_mark">
+            <div class="media media_middle">
+              <div class="media-image"><img src="{{ asset('assets/img/icons/contacts/phone.svg') }}" alt="phone.svg"/>
+              </div>
+              <div class="media-content">Тел:&#32;
+                <nobr>{{ seller.phone }}</nobr>
+              </div>
+            </div>
+          </div>
+          <div class="Section-columnSection Section-columnSection_mark">
+            <div class="media media_middle">
+              <div class="media-image"><img src="{{ asset('assets/img/icons/contacts/address.svg') }}" alt="address.svg"/>
+              </div>
+              <div class="media-content">
+                {{ seller.address }}
+              </div>
+            </div>
+          </div>
+          <div class="Section-columnSection Section-columnSection_mark">
+            <div class="media media_middle">
+              <div class="media-image"><img src="{{ asset('assets/img/icons/contacts/mail.svg') }}" alt="mail.svg"/></div>
+              <div class="media-content">Email: {{ seller.email }}</div>
+            </div>
+          </div>
+        </div>
+        <div class="Section-content">
+          <div class="row row_verticalCenter row_maxHalf">
+            <div class="row-block">
+              <div class="pict"><img src="{{ asset(seller.imageSeller) }}" alt="bigGoods.png"/>
+              </div>
+            </div>
+            <div class="row-block">
+              <h2>{{ seller.seller }}</h2>
+              <p>{{ seller.description }}</p>
+            </div>
+          </div>
+          <header class="Section-header">
+            <h2 class="Section-title">Популярные товары продавца</h2>
+          </header>
+          <div class="Cards">
+            {% for product in products %}
+            <div class="Card"><a class="Card-picture" href="{{ path('app_catalog_show', { slug: product.slug}) }}"><img src="{{ asset(product.imageFilename) }}" alt="card.jpg"/></a>
+              <div class="Card-content">
+                <strong class="Card-title"><a href="{{ path('app_catalog_show', { slug: product.slug}) }}">{{ product.product }}</a>
+                </strong>
+                <div class="Card-description">
+                  {% if product.discounts is not null %}
+                    {% set discountedPrice = product.prices.first.price - product.prices.first.price * product.discounts.value / 100 %}
+                    <div class="Card-cost">
+                      <span class="Card-priceOld">${{ product.prices.first.price }}</span><span class="Card-price">${{ discountedPrice }}</span>
+                    </div>
+                  {% else %}
+                    <div class="Card-cost">
+                      <span class="Card-price">${{ product.prices.first.price }}</span>
+                    </div>
+                  {% endif %}
+                  <div class="Card-category">{{ product.category.name }}
+                  </div>
+                  <div class="Card-hover"><a class="Card-btn" href="{{ path('app_catalog_show', { slug: product.slug}) }}"><img src="{{ asset('assets/img/icons/card/bookmark.svg') }}" alt="bookmark.svg"/></a><a class="Card-btn" href="#"><img src="{{ asset('assets/img/icons/card/cart.svg') }}" alt="cart.svg"/></a><a class="Card-btn" href="#"><img src="{{ asset('assets/img/icons/card/change.svg') }}" alt="change.svg"/></a>
+                  </div>
+                </div>
+              </div>
+              {% if product.discounts is not null %}
+                <div class="Card-sale">-{{ product.discounts.value }}%
+                </div>
+              {% endif %}
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

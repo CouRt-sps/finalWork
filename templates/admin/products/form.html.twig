@@ -1,0 +1,43 @@
+{{ form_start(productForm) }}
+    {{ form_row(productForm.product, {
+        label: 'Название'
+    }) }}
+    {{ form_row(productForm.category, {
+        label: 'Выберите категорию'
+    }) }}
+    {{ form_row(productForm.description, {
+        label: 'Описание'
+    }) }}
+    {{ form_row(productForm.body, {
+        label: 'Информация'
+    }) }}
+    {{ form_row(productForm.imageFilename, {
+        label: 'Фото'
+    }) }}
+    {{ form_row(productForm.limitedEdition, {
+        label: 'Ограниченный тираж'
+    }) }}
+    {{ form_row(productForm.sortIndex, {
+        label: 'Индекс сортировки'
+    }) }}
+    {{ form_row(productForm.price, {
+        label: 'Цена'
+    }) }}
+    {{ form_row(productForm.seller, {
+        label: 'Выберите продавца'
+    }) }}
+    {{ form_row(productForm.createdAt, {
+        label: 'Дата создания'
+    }) }}
+    {{ form_row(productForm.updatedAt, {
+        label: 'Дата редактирования'
+    }) }}
+    {{ form_row(productForm.quantityBuy, {
+        label: 'Количество продаж'
+    }) }}
+    {{ form_row(productForm.slug, {
+        label: 'slug'
+    }) }}
+
+<button type="submit" class="btn btn-primary">{{ button_text }}</button>
+{{ form_end(productForm) }}

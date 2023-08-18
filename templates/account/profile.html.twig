@@ -1,0 +1,107 @@
+{% extends 'base.html.twig' %}
+
+{% block slider %}{% endblock %}
+{% block stylesheet %}
+    {{ encore_entry_link_tags('app') }}
+{% endblock %}
+
+{% block body %}
+<div class="Middle Middle_top">
+    <div class="Middle-top">
+        <div class="wrap">
+            <div class="Middle-header">
+                <h1 class="Middle-title">Профиль</h1>
+                <ul class="breadcrumbs Middle-breadcrumbs">
+                    <li class="breadcrumbs-item"><a href="{{ path('app_homepage') }}">Главная</a></li>
+                    <li class="breadcrumbs-item"><a href="{{ path('app_account') }}">Личный кабинет</a></li>
+                    <li class="breadcrumbs-item breadcrumbs-item_current"><span>Профиль</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="Section Section_column Section_columnLeft">
+        <div class="wrap">
+            <div class="Section-column">
+                <div class="Section-columnSection">
+                    <header class="Section-header">
+                        <strong class="Section-title">Навигация</strong>
+                    </header>
+                    <div class="Section-columnContent">
+                        <div class="NavigateProfile">
+                            <ul class="menu menu_vt">
+                                <li class="menu-item"><a class="menu-link" href="{{ path('app_account') }}">Личный кабинет</a></li>
+                                <li class="menu-item_ACTIVE menu-item"><a class="menu-link" href="{{ path('app_account_edit_profile', { 'id': app.user.id }) }}">Профиль</a></li>
+                                <li class="menu-item"><a class="menu-link" href="historyorder.html">История заказов</a></li>
+                                <li class="menu-item"><a class="menu-link" href="{{ path('app_account_view_history') }}">История просмотра</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="Section-content">
+                <div class="Profile">
+                    <form class="form Profile-form" action="#" method="post">
+                        {{ form_start(accountForm) }}
+                        <div class="row">
+                            <div class="row-block">
+                                <div class="form-group">
+                                    <label class="form-label" for="avatar">
+                                       Аватар
+                                    </label>
+                                    <div class="Profile-avatar Profile-avatar_noimg">
+                                        <div class="Profile-img"><img src="assets/img/#.png" alt="#.png"/>
+                                        </div>
+                                        <label class="Profile-fileLabel" for="avatar">
+                                            {{ form_row(accountForm.imageFilename, {
+                                                label: 'Аватар'
+                                            }) }}
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="name">
+                                        {{ form_row(accountForm.firstName, {
+                                            label: 'ФИО'
+                                        }) }}
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row-block">
+                                <div class="form-group">
+                                    <label class="form-label" for="mail">
+                                        {{ form_row(accountForm.email, {
+                                            label: 'Email'
+                                        }) }}
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="password">
+                                        {{ form_row(accountForm.password, {
+                                            label: 'Пароль'
+                                        }) }}
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="passwordReply">
+                                        {{ form_row(accountForm.repeatPassword, {
+                                            label: 'Повторите пароль'
+                                        }) }}
+                                    </label>
+                                </div>
+                                <div class="form-group">
+                                    <div class="Profile-btn">
+                                        <button class="btn btn_success" type="submit">Сохранить</button>
+                                    </div>
+                                </div>
+                                {{ form_end(accountForm) }}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+

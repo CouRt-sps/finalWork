@@ -1,0 +1,16 @@
+{{ form_start(discountForm) }}
+    {{ form_row(discountForm.value, {
+        label: 'Значение'
+    }) }}
+    {{ form_row(discountForm.startDate, {
+        label: 'Старт акции'
+    }) }}
+    {{ form_row(discountForm.endDate, {
+        label: 'Завершение акции'
+    }) }}
+    {{ form_row(discountForm.description, {
+        label: 'Описание акции'
+    }) }}
+
+    <button type="submit" class="btn btn-primary">{{ button_text }}</button>
+{{ form_end(discountForm) }}

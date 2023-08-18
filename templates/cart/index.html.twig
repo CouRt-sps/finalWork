@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block slider %}{% endblock %}
+
+{% block stylesheet %}
+  {{ encore_entry_link_tags('app') }}
+{% endblock %}
+
+{% block body %}
+  <div class="Middle Middle_top">
+    <div class="Middle-top">
+      <div class="wrap">
+        <div class="Middle-header">
+          <h1 class="Middle-title">Корзина</h1>
+          <ul class="breadcrumbs Middle-breadcrumbs">
+            <li class="breadcrumbs-item"><a href="{{ path('app_homepage') }}">Главная</a></li>
+            <li class="breadcrumbs-item breadcrumbs-item_current"><span>Корзина</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="Section">
+      <div class="wrap">
+        <form class="form Cart" action="#" method="post">
+          {% for cartItem in cartItems %}
+          <div class="Cart-product">
+            <div class="Cart-block Cart-block_row">
+              <div class="Cart-block Cart-block_pict"><a class="Cart-pict" href="#"><img class="Cart-img" src="assets/img/content/home/card.jpg" alt="card.jpg"/></a>
+              </div>
+              <div class="Cart-block Cart-block_info"><a class="Cart-title" href="#">{{ cartItem.product.product }}</a>
+                <div class="Cart-desc">{{ cartItem.product.description }}
+                </div>
+              </div>
+              <div class="Cart-block Cart-block_price">
+                <div class="Cart-price">{{ cartItem.product.prices.first.price }}$
+                </div>
+              </div>
+            </div>
+            <div class="Cart-block Cart-block_row">
+              <div class="Cart-block Cart-block_seller">
+                <!-- - var options = setOptions(items, ['value', 'selected', 'disabled']);-->
+                <select class="form-select">
+                  {% for price in cartItem.product.prices %}
+                  <option value="good" >{{ price.seller.seller }}
+                  </option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="Cart-block Cart-block_amount">
+                <div class="Cart-amount">
+                  <div class="Amount">
+                    <div class="mb-2">
+                      <div class="text-muted align-self-center article-detail-arrows" data-id="voteBlock">
+                        <button data-id="voteButton" data-href="{{ path('app_cart_like', { id: cartItem.id, type: 'down'}) }}" class="btn btn-danger"><i class="fas fa-arrow-down"></i></button>
+                        <span data-id="voteCount">{{ cartItem.quantity }}</span>
+                        <button data-id="voteButton" data-href="{{ path('app_cart_like', { id: cartItem.id, type: 'up'}) }}" class="btn btn-success ml-3"><i class="fas fa-arrow-up"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="Cart-block Cart-block_delete"><a class="Cart-delete" href="#"><img src="assets/img/icons/card/delete.svg" alt="delete.svg"/></a>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+          <div class="Cart-total">
+            <div class="Cart-block Cart-block_total">
+              <strong class="Cart-title">Итого:
+              </strong><span class="Cart-price">{{ total }}$</span>
+            </div>
+            <div class="Cart-block"><a class="btn btn_success btn_lg" href="{{ path('app_order', {total: total, id: userId}) }}">Оформить заказ</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+{% block javascripts %}
+  <script>{{ asset('js/vote.js') }}</script>
+{% endblock %}
